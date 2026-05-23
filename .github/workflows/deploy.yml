@@ -1,12 +1,31 @@
-name: Deploy to GitHub Pages
+name: Deploy
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      target:
+        description: 'What to deploy'
+        required: true
+        type: choice
+        options:
+          - s01 — Intro, Context & HMI Foundations
+          - s02 — Users, Tasks & HMI Architecture
+          - s03 — Figma Basics & Wireframes
+          - s04 — Flows, Components & Basic Prototypes
+          - s05 — Physical Controls, Arduino & ProtoPie
+          - s06 — Navigation Patterns & Layout
+          - s07 — Wireframes II: Flows & States
+          - s08 — Visual Language & Design System
+          - s09 — Applying Visual Design to Screens
+          - s10 — High-Fidelity Prototype & Motion
+          - s11 — Usability Checks & Iteration
+          - s12 — Refinement I
+          - s13 — Refinement II & Exam Prep
+          - index
+          - all
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -16,6 +35,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Node
+        if: ${{ !startsWith(github.event.inputs.target, 'index') }}
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -23,31 +43,59 @@ jobs:
           cache-dependency-path: slides/package-lock.json
 
       - name: Install dependencies
+        if: ${{ !startsWith(github.event.inputs.target, 'index') }}
         run: npm ci
         working-directory: slides
 
-      - name: Build all decks
+      - name: Build deck(s)
+        if: ${{ !startsWith(github.event.inputs.target, 'index') }}
         working-directory: slides
+        env:
+          TARGET: ${{ github.event.inputs.target }}
         run: |
-          npx slidev build s01_intro.md            --base /ied-hmi-2526/s01/ --out dist/s01
-          npx slidev build s02_users_tasks.md       --base /ied-hmi-2526/s02/ --out dist/s02
-          npx slidev build s03_figma_basics.md      --base /ied-hmi-2526/s03/ --out dist/s03
-          npx slidev build s04_flows_prototypes.md  --base /ied-hmi-2526/s04/ --out dist/s04
-          npx slidev build s05_physical_controls.md --base /ied-hmi-2526/s05/ --out dist/s05
-          npx slidev build s06_navigation_layout.md --base /ied-hmi-2526/s06/ --out dist/s06
-          npx slidev build s07_wireframes_II.md     --base /ied-hmi-2526/s07/ --out dist/s07
-          npx slidev build s08_visual_language.md   --base /ied-hmi-2526/s08/ --out dist/s08
-          npx slidev build s09_visual_design.md     --base /ied-hmi-2526/s09/ --out dist/s09
-          npx slidev build s10_hifi_motion.md       --base /ied-hmi-2526/s10/ --out dist/s10
-          npx slidev build s11_usability.md         --base /ied-hmi-2526/s11/ --out dist/s11
-          npx slidev build s12_refinement_I.md      --base /ied-hmi-2526/s12/ --out dist/s12
-          npx slidev build s13_refinement_II.md     --base /ied-hmi-2526/s13/ --out dist/s13
+          build() {
+            echo "▶ Building $1"
+            npx slidev build "$2" --base /ied-hmi-2526/$1/ --out dist/$1
+          }
+          case "${TARGET%% *}" in
+            s01) build s01 s01_intro.md ;;
+            s02) build s02 s02_users_tasks.md ;;
+            s03) build s03 s03_figma_basics.md ;;
+            s04) build s04 s04_flows_prototypes.md ;;
+            s05) build s05 s05_physical_controls.md ;;
+            s06) build s06 s06_navigation_layout.md ;;
+            s07) build s07 s07_wireframes_II.md ;;
+            s08) build s08 s08_visual_language.md ;;
+            s09) build s09 s09_visual_design.md ;;
+            s10) build s10 s10_hifi_motion.md ;;
+            s11) build s11 s11_usability.md ;;
+            s12) build s12 s12_refinement_I.md ;;
+            s13) build s13 s13_refinement_II.md ;;
+            all)
+              build s01 s01_intro.md
+              build s02 s02_users_tasks.md
+              build s03 s03_figma_basics.md
+              build s04 s04_flows_prototypes.md
+              build s05 s05_physical_controls.md
+              build s06 s06_navigation_layout.md
+              build s07 s07_wireframes_II.md
+              build s08 s08_visual_language.md
+              build s09 s09_visual_design.md
+              build s10 s10_hifi_motion.md
+              build s11 s11_usability.md
+              build s12 s12_refinement_I.md
+              build s13 s13_refinement_II.md
+              ;;
+          esac
 
       - name: Add course index page
-        run: cp index.html slides/dist/index.html
+        run: |
+          mkdir -p slides/dist
+          cp publish/index.html slides/dist/index.html
 
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: slides/dist
+          keep_files: true

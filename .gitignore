@@ -11,7 +11,7 @@ slides/.slidev/
 # Claude Code
 .claude/
 
-# Private files – student data & source docs
-students.xlsx
-INTERACTION DESIGN.ics
+# Private — not for the public repo
+admin/
+source-materials/
 Source/
