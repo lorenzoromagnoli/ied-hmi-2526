@@ -1,8 +1,7 @@
 # Dependencies
 slides/node_modules/
 
-# Build output
-slides/dist/
+# Slidev cache
 slides/.slidev/
 
 # macOS

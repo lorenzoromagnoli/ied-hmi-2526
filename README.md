@@ -10,10 +10,16 @@ Lorenzo Romagnoli — 14 sessions · May – September 2026
 /
 ├── admin/              # Student data, attendance register (private, not in git)
 ├── source-materials/   # Reference docs, ICS calendar, old slides (private, not in git)
-├── publish/
-│   └── index.html      # Course landing page → lorenzoromagnoli.github.io/ied-hmi-2526
+├── docs/               # Built output → served by GitHub Pages
+│   ├── index.html      # Course landing page
+│   ├── s01/            # Built S01 slides (created by npm run build:s01)
+│   └── …
 └── slides/             # Slidev source — one .md file per session
 ```
+
+**Live URL:** `https://lorenzoromagnoli.github.io/ied-hmi-2526`
+
+---
 
 ## Working on slides locally
 
@@ -25,33 +31,40 @@ npm run s01          # open S01 in the browser with hot reload
 npm run s02          # same for any other session
 ```
 
-Each session file maps to a script in `slides/package.json`.
+---
 
-## Publishing to GitHub Pages
+## Publishing a session
 
-Deployment is **fully manual** — you decide when each session goes live.
+Build locally, then commit and push — GitHub Pages serves the `docs/` folder directly.
 
-1. Go to the repo on GitHub → **Actions** → **Deploy** → **Run workflow**
-2. Pick what to deploy from the dropdown:
+```bash
+cd slides
 
-| Option | What happens |
-|---|---|
-| `s01 — Intro…` … `s13 — …` | Builds that one deck and updates the index page |
-| `index` | Updates only the landing page (no rebuild) |
-| `all` | Builds all 13 decks and updates the index page |
+# Build one session
+npm run build:s01
 
-Already-published sessions are never touched when deploying a single deck.  
-Build time: ~2 min per session, ~15 min for `all`.
+# Or rebuild everything
+npm run build:all
+```
 
-**Live URL:** `https://lorenzoromagnoli.github.io/ied-hmi-2526`
+Then publish:
+
+```bash
+git add ../docs
+git commit -m "publish S01"
+git push
+```
+
+The site updates within seconds of the push.
+
+---
 
 ## What is and isn't in git
 
 | Path | In repo | Reason |
 |---|---|---|
 | `slides/` | ✅ | Source code and assets |
-| `publish/` | ✅ | Course index page |
+| `docs/` | ✅ | Built output served by GitHub Pages |
 | `admin/` | ❌ | Contains student personal data |
 | `source-materials/` | ❌ | Local reference material only |
 | `slides/node_modules/` | ❌ | Installed locally via `npm install` |
-| `slides/dist/` | ❌ | Built by CI, deployed to gh-pages branch |
