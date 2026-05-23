@@ -7,6 +7,7 @@ fonts:
   mono: DM Mono
   weights: '300,400,500,700'
 cssEngine: unocss
+routerMode: hash
 ---
 
 <div class="cover-layout">
