@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interaction Design · Automotive HMI</title>
+  <style>
+    :root {
+      --bg:       #0f1117;
+      --surface:  #161820;
+      --border:   #252830;
+      --accent:   #4d7cfe;
+      --text:     #e4e6f0;
+      --muted:    #5a6070;
+      --green:    #22c55e;
+      --yellow:   #f59e0b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, sans-serif;
+      min-height: 100vh;
+      padding: 56px 24px 80px;
+    }
+
+    .wrap {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    header {
+      margin-bottom: 56px;
+    }
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+    h1 {
+      font-size: clamp(1.8rem, 5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    h1 span { color: var(--muted); }
+    .meta {
+      font-size: 0.85rem;
+      color: var(--muted);
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+    .meta-item::before {
+      content: attr(data-icon) ' ';
+    }
+
+    /* ── Phase section ── */
+    .phase {
+      margin-bottom: 44px;
+    }
+    .phase-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 4px;
+    }
+
+    /* ── Session row ── */
+    .session {
+      display: grid;
+      grid-template-columns: 28px 1fr auto auto;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .session:last-child { border-bottom: none; }
+
+    .sn {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .info { min-width: 0; }
+    .title {
+      font-size: 0.88rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .date {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+
+    /* status dot */
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot-past    { background: var(--green); }
+    .dot-today   { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+    .dot-upcoming { background: var(--border); }
+
+    /* slides button */
+    .btn {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 5px 13px;
+      border-radius: 6px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: opacity 0.15s;
+    }
+    .btn-slides {
+      background: var(--accent);
+      color: #fff;
+    }
+    .btn-slides:hover { opacity: 0.8; }
+    .btn-locked {
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .btn-exam {
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ── Footer ── */
+    footer {
+      margin-top: 56px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="tag">IED Master Transportation Design · 2025/26</div>
+    <h1>Interaction Design<br><span>Automotive HMI</span></h1>
+    <div class="meta">
+      <span class="meta-item" data-icon="👤">Lorenzo Romagnoli</span>
+      <span class="meta-item" data-icon="📅">May – September 2026</span>
+      <span class="meta-item" data-icon="🏫">IED Torino, San Quintino 39</span>
+    </div>
+  </header>
+
+  <div id="root"></div>
+
+  <footer>
+    <span>Slides built with <a href="https://sli.dev">Slidev</a></span>
+    <span>IED Torino · <span id="yr"></span></span>
+  </footer>
+</div>
+
+<script>
+const BASE = '/ied-hmi-2526';
+
+const phases = [
+  {
+    label: 'Phase 1 · Foundations',
+    sessions: [
+      { n:'01', date:'2026-05-19', title:'Intro, Context & HMI Foundations',        slug:'s01' },
+      { n:'02', date:'2026-05-26', title:'Users, Tasks & HMI Architecture',         slug:'s02' },
+    ],
+  },
+  {
+    label: 'Phase 2 · Tooling & Wireframes',
+    sessions: [
+      { n:'03', date:'2026-06-09', title:'Figma Basics & Wireframes',               slug:'s03' },
+      { n:'04', date:'2026-06-16', title:'Flows, Components & Basic Prototypes',    slug:'s04' },
+      { n:'05', date:'2026-06-23', title:'Physical Controls, Arduino & ProtoPie',   slug:'s05' },
+    ],
+  },
+  {
+    label: 'Phase 3 · Visual Design',
+    sessions: [
+      { n:'06', date:'2026-06-30', title:'Navigation Patterns & Layout',            slug:'s06' },
+      { n:'07', date:'2026-07-07', title:'Wireframes II: Flows & States',           slug:'s07' },
+      { n:'08', date:'2026-07-14', title:'Visual Language & Design System',         slug:'s08' },
+      { n:'09', date:'2026-07-21', title:'Applying Visual Design to Screens',       slug:'s09' },
+    ],
+  },
+  {
+    label: 'Phase 4 · Prototype & Deliver',
+    sessions: [
+      { n:'10', date:'2026-07-28', title:'High-Fidelity Prototype & Motion',        slug:'s10' },
+      { n:'11', date:'2026-09-01', title:'Usability Checks & Iteration',            slug:'s11' },
+      { n:'12', date:'2026-09-08', title:'Refinement I',                            slug:'s12' },
+      { n:'13', date:'2026-09-15', title:'Refinement II & Exam Prep',               slug:'s13' },
+    ],
+  },
+  {
+    label: 'Final',
+    sessions: [
+      { n:'14', date:'2026-09-22', title:'Final Presentation',                      slug:null  },
+    ],
+  },
+];
+
+const today = new Date(); today.setHours(0,0,0,0);
+
+function status(dateStr) {
+  const d = new Date(dateStr);
+  if (d.getTime() === today.getTime()) return 'today';
+  return d < today ? 'past' : 'upcoming';
+}
+
+function fmtDate(dateStr) {
+  return new Date(dateStr).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+}
+
+const root = document.getElementById('root');
+
+for (const phase of phases) {
+  const section = document.createElement('section');
+  section.className = 'phase';
+  section.innerHTML = `<div class="phase-label">${phase.label}</div>`;
+
+  for (const s of phase.sessions) {
+    const st = status(s.date);
+    const row = document.createElement('div');
+    row.className = 'session';
+
+    let btn;
+    if (s.slug === null) {
+      btn = `<span class="btn btn-exam">Exam</span>`;
+    } else if (st === 'upcoming') {
+      btn = `<span class="btn btn-locked">Soon</span>`;
+    } else {
+      btn = `<a class="btn btn-slides" href="${BASE}/${s.slug}/">Slides →</a>`;
+    }
+
+    row.innerHTML = `
+      <span class="sn">${s.n}</span>
+      <div class="info">
+        <div class="title">${s.title}</div>
+        <div class="date">${fmtDate(s.date)}</div>
+      </div>
+      <span class="dot dot-${st}"></span>
+      ${btn}
+    `;
+    section.appendChild(row);
+  }
+  root.appendChild(section);
+}
+
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>

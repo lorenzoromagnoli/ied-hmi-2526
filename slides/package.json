@@ -1,0 +1,27 @@
+{
+  "name": "ied-hmi-course",
+  "private": true,
+  "scripts": {
+    "template": "slidev _template.md --open",
+    "s01": "slidev s01_intro.md --open",
+    "s02": "slidev s02_users_tasks.md --open",
+    "s03": "slidev s03_figma_basics.md --open",
+    "s04": "slidev s04_flows_prototypes.md --open",
+    "s05": "slidev s05_physical_controls.md --open",
+    "s06": "slidev s06_navigation_layout.md --open",
+    "s07": "slidev s07_wireframes_II.md --open",
+    "s08": "slidev s08_visual_language.md --open",
+    "s09": "slidev s09_visual_design.md --open",
+    "s10": "slidev s10_hifi_motion.md --open",
+    "s11": "slidev s11_usability.md --open",
+    "s12": "slidev s12_refinement_I.md --open",
+    "s13": "slidev s13_refinement_II.md --open"
+  },
+  "dependencies": {
+    "@slidev/cli": "^0.49.29",
+    "@slidev/theme-default": "^0.24.0"
+  },
+  "devDependencies": {
+    "playwright-chromium": "^1.59.1"
+  }
+}

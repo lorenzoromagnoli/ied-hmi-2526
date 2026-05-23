@@ -1,0 +1,17 @@
+# Dependencies
+slides/node_modules/
+
+# Build output
+slides/dist/
+slides/.slidev/
+
+# macOS
+.DS_Store
+
+# Claude Code
+.claude/
+
+# Private files – student data & source docs
+students.xlsx
+INTERACTION DESIGN.ics
+Source/

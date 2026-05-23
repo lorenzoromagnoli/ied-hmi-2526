@@ -1,0 +1,53 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: slides/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+        working-directory: slides
+
+      - name: Build all decks
+        working-directory: slides
+        run: |
+          npx slidev build s01_intro.md            --base /ied-hmi-2526/s01/ --out dist/s01
+          npx slidev build s02_users_tasks.md       --base /ied-hmi-2526/s02/ --out dist/s02
+          npx slidev build s03_figma_basics.md      --base /ied-hmi-2526/s03/ --out dist/s03
+          npx slidev build s04_flows_prototypes.md  --base /ied-hmi-2526/s04/ --out dist/s04
+          npx slidev build s05_physical_controls.md --base /ied-hmi-2526/s05/ --out dist/s05
+          npx slidev build s06_navigation_layout.md --base /ied-hmi-2526/s06/ --out dist/s06
+          npx slidev build s07_wireframes_II.md     --base /ied-hmi-2526/s07/ --out dist/s07
+          npx slidev build s08_visual_language.md   --base /ied-hmi-2526/s08/ --out dist/s08
+          npx slidev build s09_visual_design.md     --base /ied-hmi-2526/s09/ --out dist/s09
+          npx slidev build s10_hifi_motion.md       --base /ied-hmi-2526/s10/ --out dist/s10
+          npx slidev build s11_usability.md         --base /ied-hmi-2526/s11/ --out dist/s11
+          npx slidev build s12_refinement_I.md      --base /ied-hmi-2526/s12/ --out dist/s12
+          npx slidev build s13_refinement_II.md     --base /ied-hmi-2526/s13/ --out dist/s13
+
+      - name: Add course index page
+        run: cp index.html slides/dist/index.html
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: slides/dist
