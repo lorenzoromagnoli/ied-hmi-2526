@@ -84,7 +84,7 @@ title: Meet the Students
   </div>
   <div class="board-link">
     <a href="https://www.figma.com/board/nC8DRq2Fg1gj4ItuBUwf9f/Intro?node-id=0-1&t=09vzCqiOD2c75YvU-1" target="_blank">figma.com/board/Intro</a>
-    <span class="board-password">Password: pep-spice-spoof-crit</span>
+    <span class="board-password">Password: iedtransportation26</span>
   </div>
 </div>
 
@@ -369,7 +369,7 @@ title: Activity — HMI First Impressions
   </div>
   <div class="board-link">
     <a href="https://www.figma.com/board/nC8DRq2Fg1gj4ItuBUwf9f/Intro?node-id=0-1&t=09vzCqiOD2c75YvU-1" target="_blank">figma.com/board/Intro</a>
-    <span class="board-password">Password: pep-spice-spoof-crit</span>
+    <span class="board-password">Password: iedtransportation26</span>
   </div>
 </div>
 
@@ -1326,7 +1326,7 @@ title: Assignment 1 — Your HMI Project
   </div>
   <div class="board-link">
     <a href="https://www.figma.com/board/nC8DRq2Fg1gj4ItuBUwf9f/Intro?node-id=0-1&t=09vzCqiOD2c75YvU-1" target="_blank">Drop your idea on the FigJam board</a>
-    <span class="board-password">Password: pep-spice-spoof-crit</span>
+    <span class="board-password">Password: iedtransportation26</span>
   </div>
 </div>
 
@@ -1365,7 +1365,7 @@ title: Assignment 2 — HMI Case Study
   <div class="activity-note">2 presentations per session · at the start of class · volunteers first, then rotation</div>
   <div class="board-link">
     <a href="https://www.figma.com/board/nC8DRq2Fg1gj4ItuBUwf9f/Intro?node-id=0-1&t=09vzCqiOD2c75YvU-1" target="_blank">Drop your case study on the FigJam board</a>
-    <span class="board-password">Password: pep-spice-spoof-crit</span>
+    <span class="board-password">Password: iedtransportation26</span>
   </div>
 </div>
 
