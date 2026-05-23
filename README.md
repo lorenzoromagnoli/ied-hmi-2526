@@ -11,6 +11,7 @@ Lorenzo Romagnoli — 14 sessions · May – September 2026
 ├── admin/              # Student data, attendance register (private, not in git)
 ├── source-materials/   # Reference docs, ICS calendar, old slides (private, not in git)
 ├── docs/               # Built output → served by GitHub Pages
+│   │                   # (name is fixed — GitHub Pages only supports /docs)
 │   ├── index.html      # Course landing page
 │   ├── s01/            # Built S01 slides (created by npm run build:s01)
 │   └── …
