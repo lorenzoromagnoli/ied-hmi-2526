@@ -9,10 +9,6 @@ fonts:
 cssEngine: unocss
 ---
 
----
-title: Cover
----
-
 <div class="cover-layout">
   <div class="tag">IED Master Transportation Design · 2025/26</div>
   <h1>Interaction Design<br><span class="accent">Automotive HMI</span></h1>
