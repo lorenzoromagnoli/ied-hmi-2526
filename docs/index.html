@@ -230,8 +230,13 @@ const phases = [
 
 const today = new Date(); today.setHours(0,0,0,0);
 
+function parseLocalDate(str) {
+  const [y, m, d] = str.split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+
 function status(dateStr) {
-  const d = new Date(dateStr);
+  const d = parseLocalDate(dateStr);
   if (d.getTime() === today.getTime()) return 'today';
   return d < today ? 'past' : 'upcoming';
 }
