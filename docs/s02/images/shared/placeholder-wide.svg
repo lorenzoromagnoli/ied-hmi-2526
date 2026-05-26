@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <rect width="1200" height="675" fill="#161921"/>
+  <rect x="1" y="1" width="1198" height="673" fill="none" stroke="#252a36" stroke-width="2" stroke-dasharray="12,6"/>
+  <line x1="0" y1="337" x2="1200" y2="337" stroke="#252a36" stroke-width="1"/>
+  <line x1="600" y1="0" x2="600" y2="675" stroke="#252a36" stroke-width="1"/>
+  <text x="600" y="320" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" fill="#4af0c4" font-weight="600">IMAGE PLACEHOLDER</text>
+  <text x="600" y="350" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" fill="#6b7280">1200 × 675 · 16:9</text>
+</svg>
